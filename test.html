@@ -18,6 +18,7 @@
 		color: #fff;
 		display: none;
 		text-align: center;
+		z-index: 100;
 
 		-moz-box-shadow: 3px 3px 4px #000;
 		-webkit-box-shadow: 3px 3px 4px #000;
@@ -29,6 +30,19 @@
 
 	}
 	</style>
+
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$('#activate').hover(
+			function () {
+				$('#popup').show();
+			},
+			function () {
+				$('#popup').insectify().hide();
+			}
+		);
+	});
+	</script>
 </head>
 <body>
 	<a href="#" id="activate">Hover Over Me!</a>
