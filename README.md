@@ -14,20 +14,17 @@ Usage
 
 Include jQuery and jInsect into your HTML page:
 
-`
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="js/jquery.insects.js"></script>
-`
 
 
 Call $.insectify() on the element you want to apply insects to:
 
-`$('#popup').insectify()`
+	`$('#popup').insectify()`
 
 A typical use for this plugin would be to have insects hiding under a popup,
 this can be done like so:
 
-`
 	<script type="text/javascript">
 	$(document).ready(function () {
 		$('#activate').hover(
@@ -40,21 +37,18 @@ this can be done like so:
 		);
 	});
 	</script>
-`
 
 The above code would work on some HTML similar to this:
 
-`<a href="#" id="activate'>Hover over me</a>
-	<div id="popup" style="display: hidden;">Popup contents</div>`
+	<a href="#" id="activate'>Hover over me</a>
+	<div id="popup" style="display: hidden;">Popup contents</div>
 
 Options can be passed to the $.insectify() method like so:
 
-`
 	$('#popup').insectify({
 		'max-insects': 5,
 		'chance': 0.8
 	});
-`
 
 Options
 -------
