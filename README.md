@@ -50,6 +50,8 @@ Options can be passed to the $.insectify() method like so:
 		'chance': 0.8
 	});
 
+For a list of all available objects see the next section.
+
 Options
 -------
 

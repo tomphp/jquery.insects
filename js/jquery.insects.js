@@ -1,5 +1,7 @@
 (function ($) {
-	function Insect($layer, $window) {
+	"use strict";
+
+	function Insect($layer, settings, $window) {
 		function Vector2D(x, y) {
 			this.x = x;
 			this.y = y;
@@ -107,13 +109,22 @@
 		this.create();
 	}
 
-	$.fn.insectify = function () {
+	$.fn.insectify = function (options) {
+		var settings = $.extend({
+			'max-insects': 3,
+			'chance': 0.5
+		}, options);
+
+		if (Math.random() > settings['chance']) {
+			return this;
+		}
+
 		return this.each(function (index, element) {
-			var count = Math.floor(Math.random() * 3),
+			var count = Math.floor(Math.random() * settings['max-insects']),
 				insects = [],
 				i;
 			for (i = 0; i <= count; i += 1) {
-				insects.push(new Insect($(element), $(window)));
+				insects.push(new Insect($(element), settings, $(window)));
 			}
 		});
 	};
