@@ -38,6 +38,9 @@ this can be done like so:
 	});
 	</script>
 
+**Please note that $.insectify() must be called before $.hide() as it needs the element
+to be displayed when it is called so it can get the position.**
+
 The above code would work on some HTML similar to this:
 
 	<a href="#" id="activate'>Hover over me</a>
@@ -55,10 +58,28 @@ For a list of all available objects see the next section.
 Options
 -------
 
-* max-insects (Integer): The maximum number of insects that could be hiding
-under the element.
-* chance (Float 0-1): The chance that there will be insects hiding. A value of 1
-means there will always be insects hiding.
+* max-insects: The maximum number of insects that could be hiding under the
+element.
+	* Type: Integer
+	* Default: 3
+* chance: The chance that there will be insects hiding. A value of 1 means
+there will always be insects hiding.
+	* Type: Float
+	* Range: 0-1
+	* Default: 0.5
+* min-speed: The minimum possible speed of an insect.
+	* Type: Integer
+	* Range: 1-10 recommended
+	* Default: 5
+* max-speed: The maximum possible speed of an insect.
+	* Type: Integer
+	* Range: 1-20 recommended
+	* Default: 15
+* update-freq (Integer): The time between updates of the insect sprites in
+milliseconds. Lower is smoother but more CPU intensive.
+	* Type: Integer
+	* Range: 1-1000
+	* Default: 50
 
 Links
 -----
