@@ -20,7 +20,7 @@ Include jQuery and jInsect into your HTML page:
 
 Call $.insectify() on the element you want to apply insects to:
 
-	`$('#popup').insectify()`
+	`$('#popup').insectify();`
 
 A typical use for this plugin would be to have insects hiding under a popup,
 this can be done like so:

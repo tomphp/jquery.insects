@@ -11,7 +11,7 @@
 
 	function Insect($layer, settings, $window) {
 		var lastUpdate = new Date().getTime();
-		
+
 		function Vector2D(x, y) {
 			this.x = x;
 			this.y = y;
@@ -21,7 +21,7 @@
 				this.y += vec2d.y;
 				return this;
 			};
-			
+
 			this.scale = function (scale) {
 				this.x *= scale;
 				this.y *= scale;
@@ -84,10 +84,11 @@
 		};
 
 		this.isOffscreen = function () {
+			var scrollTop = $window.scrollTop();
 			if (this.position.x < -50
-					|| this.position.y < -50
+					|| this.position.y < scrollTop - 50
 					|| this.position.x > $window.width()
-					|| this.position.y > $window.height()) {
+					|| this.position.y > scrollTop + $window.height()) {
 				this.kill();
 			}
 		};
@@ -96,7 +97,7 @@
 			if (!this.alive) {
 				return false;
 			}
-			
+
 			var now = new Date().getTime(),
 				delta = now - lastUpdate;
 
@@ -145,14 +146,14 @@
 		if (settings['chance'] > 1) {
 			settings['chance'] = 1;
 		}
-		
+
 		if (settings['min-speed'] < 1) {
 			settings['min-speed'] = 1;
 		}
 		if (settings['max-speed'] < settings['min-speed']) {
 			settings['max-speed'] = settings['min-speed'];
 		}
-		
+
 		return settings;
 	}
 
