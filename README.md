@@ -80,14 +80,19 @@ milliseconds. Lower is smoother but more CPU intensive.
 	* Type: Integer
 	* Range: 1-1000
 	* Default: 50
-* mouse-trigger:
+* mouse-trigger: Whether the insects accellerate when the mouse is near.
 	* Type: Boolean
 	* Default: true
-* mouse-distance:
+* mouse-distance: The distance between the mouse & the insect that triggers
+an action (in pixels).
 	* Type: Integer
 	* Range: 10-100 recommended
 	* Default: 50
-* scared:
+* scared: If set to true then when the insect approaches the mouse head on it
+will turn to avoid the mouse.
+	* Type: Boolean
+	* Default: true
+* squishable: If set to true the insects get splatted on the page if clicked.
 	* Type: Boolean
 	* Default: true
 

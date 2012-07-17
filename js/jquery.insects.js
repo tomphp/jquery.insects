@@ -1,4 +1,4 @@
-(function ($, window) {
+(function ($, window, undefined) {
 	"use strict";
 
 	function Vector2D(x, y) {
@@ -74,7 +74,8 @@
 			'update-freq': 50,
 			'mouse-trigger': true,
 			'mouse-distance': 50,
-			'scared': true
+			'scared': true,
+			'squishable': true
 		},
 		mousePos = new Vector2D(0, 0);
 
@@ -90,6 +91,13 @@
 			});
 
 			$('body').append(this.$element);
+
+			if (settings.squishable) {
+				var obj = this;
+				this.$element.click(function () {
+					obj.squish();
+				});
+			}
 
 			this.randomRotate();
 			this.update();
@@ -127,6 +135,11 @@
 			this.alive = false;
 			this.$element.remove();
 		};
+
+		this.squish = function () {
+			this.alive = false;
+			this.$element.addClass('jq-insect-dead');
+		}
 
 		this.isOffscreen = function () {
 			var scrollTop = $window.scrollTop();
