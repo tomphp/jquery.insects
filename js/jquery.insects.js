@@ -1,40 +1,85 @@
 (function ($, window) {
 	"use strict";
 
+	function Vector2D(x, y) {
+		this.x = x;
+		this.y = y;
+
+		this.add = function (vec2d) {
+			this.x += vec2d.x;
+			this.y += vec2d.y;
+			return this;
+		};
+		
+		this.subtract = function (vec2d) {
+			this.x -= vec2d.x;
+			this.y -= vec2d.y;
+			return this;
+		};
+
+		this.scale = function (scale) {
+			this.x *= scale;
+			this.y *= scale;
+			return this;
+		};
+		
+		this.normalize = function () {
+			var len = this.length();
+			this.x /= len;
+			this.y /= len;
+			return this;
+		};
+
+		this.dot = function (vec2d) {
+			return this.x * vec2d.x + this.y * vec2d.y;
+		};
+		
+		this.getAdded = function (vec2d) {
+			return this.copy().add(vec2d);
+		};
+		
+		this.getSubtracted = function (vec2d) {
+			return this.copy().subtract(vec2d);
+		};
+
+		this.getRotated = function (r) {
+			var x = (this.x * Math.cos(r) + this.y * -Math.sin(r)),
+				y = (this.x * Math.sin(r) + this.y * Math.cos(r));
+
+			return new Vector2D(x, y);
+		};
+		
+		this.getNormalized = function () {
+			return this.copy().normalize();
+		};
+				
+		this.length = function () {
+			return Math.sqrt(this.x * this.x + this.y * this.y);
+		};
+		
+		this.angle = function (vec2d) {
+			return Math.acos(this.getNormalized().dot(vec2d.getNormalized()));
+		};
+		
+		this.copy = function() {
+			return new Vector2D(this.x, this.y);
+		};
+	}
+	
 	var defaultSettings = {
 			'max-insects': 3,
 			'chance': 0.5,
 			'max-speed': 15,
 			'min-speed': 5,
-			'update-freq': 50
-		};
+			'update-freq': 50,
+			'mouse-trigger': true,
+			'mouse-distance': 50,
+			'scared': true
+		},
+		mousePos = new Vector2D(0, 0);
 
 	function Insect($layer, settings, $window) {
 		var lastUpdate = new Date().getTime();
-
-		function Vector2D(x, y) {
-			this.x = x;
-			this.y = y;
-
-			this.add = function (vec2d) {
-				this.x += vec2d.x;
-				this.y += vec2d.y;
-				return this;
-			};
-
-			this.scale = function (scale) {
-				this.x *= scale;
-				this.y *= scale;
-				return this;
-			};
-
-			this.getRotated = function (r) {
-				var x = (this.x * Math.cos(r) + this.y * -Math.sin(r)),
-					y = (this.x * Math.sin(r) + this.y * Math.cos(r));
-
-				return new Vector2D(x, y);
-			};
-		}
 
 		this.create = function () {
 			this.$element = $('<div class="jq-insect"></div>').css({
@@ -105,6 +150,20 @@
 
 			this.position.add(this.direction.getRotated(this.rotation).scale(delta / 50));
 			
+			if (mousePos.getSubtracted(this.position).length() < settings['mouse-distance']) {
+				this.direction.y = settings['max-speed'];
+
+				if (settings['scared']) {
+					var mouseDir = mousePos.getSubtracted(this.position),
+						angle = Math.abs(mouseDir.angle(this.direction.getRotated(this.rotation)));
+	
+					if (angle < Math.PI / 4) {
+						this.rotation += Math.random(Math.PI / 2) + Math.PI / 2;
+						this.rotateElement();
+					}
+				}
+			}
+			
 			if (this.isOffscreen(window.width, window.height)) {
 				this.kill();
 				return;
@@ -160,6 +219,12 @@
 	$.fn.insectify = function (options) {
 		var settings = validateSettings($.extend(defaultSettings, options));
 
+		if (settings['mouse-trigger']) {
+			$(window).bind("mousemove", function (event) {
+				mousePos.x = event.pageX;
+				mousePos.y = event.pageY;
+			});
+		}
 
 		if (Math.random() > settings.chance) {
 			return this;

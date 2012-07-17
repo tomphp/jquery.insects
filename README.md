@@ -75,11 +75,21 @@ there will always be insects hiding.
 	* Type: Integer
 	* Range: 1-20 recommended
 	* Default: 15
-* update-freq (Integer): The time between updates of the insect sprites in
+* update-freq: The time between updates of the insect sprites in
 milliseconds. Lower is smoother but more CPU intensive.
 	* Type: Integer
 	* Range: 1-1000
 	* Default: 50
+* mouse-trigger:
+	* Type: Boolean
+	* Default: true
+* mouse-distance:
+	* Type: Integer
+	* Range: 10-100 recommended
+	* Default: 50
+* scared:
+	* Type: Boolean
+	* Default: true
 
 Links
 -----
